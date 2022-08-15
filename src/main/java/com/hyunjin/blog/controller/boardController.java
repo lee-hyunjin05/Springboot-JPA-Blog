@@ -1,14 +1,55 @@
 package com.hyunjin.blog.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-@Controller
-public class boardController {
+import com.hyunjin.blog.service.BoardService;
 
+@Controller
+public class BoardController {
+
+	@Autowired
+	private BoardService boardService;
+	
+	/*
+	@Autowired
+	private PrincipalDetail principal;
+	*/
+	
+	/*
 	@GetMapping({"","/"})
-	public String index() {
+	public String index(@AuthenticationPrincipal PrincipalDetail principal) { //컨트롤러에서 세션 어떻게 찾는지?
 		// /WEB-INF/views/index
+		System.out.println("로그인 사용자 아이디 : " +principal.getUsername());
 		return "index";
 	}
+	*/
+	
+	/*
+	//컨트롤러에서 세션 어떻게 찾는지?
+	@GetMapping({"","/"})
+//	public String index(Model model) {
+	public String index(Model model, @PageableDefault(size = 3, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+		model.addAttribute("boards", boardService.글목록(pageable));
+		return "index";	//viewResolver 작동!
+	}
+	*/
+	
+	@GetMapping({"","/"})
+	public String index(Model model, @PageableDefault(size =3, sort="id", direction=Sort.Direction.DESC) Pageable pageable) {  
+	    model.addAttribute("boards", boardService.글목록(pageable));
+	    return "index";         //viewResolver 작동
+	  }
+	
+	//권한이 필요
+	@GetMapping("/board/saveForm")
+	public String saveForm() {
+		return "board/saveForm";
+	}
+	
 }

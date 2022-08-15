@@ -77,8 +77,8 @@ public class DummyControllerTest {
 	}
 	
 	@GetMapping("/dummy/user")
-//	public Page<User> pageList(@PageableDefault(size = 1, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
-	public List<User> pageList(@PageableDefault(size = 1, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+	public Page<User> pageList(@PageableDefault(size = 1, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+//	public List<User> pageList(@PageableDefault(size = 1, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
 		Page<User> pagingUsers = userRepository.findAll(pageable);
 //		List<User> users = userRepository.findAll(pageable).getContent();
 		List<User> users = pagingUsers.getContent();
@@ -87,7 +87,8 @@ public class DummyControllerTest {
 			
 		}
 		
-		return users;
+//		return users;
+		return pagingUsers;
 	}
 	
 	//{id} 주소로 파라미터를 전달받을 수 있습니다.

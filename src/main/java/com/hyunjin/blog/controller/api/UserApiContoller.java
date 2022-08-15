@@ -1,4 +1,4 @@
-package com.hyunjin.blog.api;
+package com.hyunjin.blog.controller.api;
 
 import javax.servlet.http.HttpSession;
 
