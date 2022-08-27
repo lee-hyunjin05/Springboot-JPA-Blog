@@ -50,6 +50,9 @@ public class UserApiContoller {
 	
 	@PutMapping("/user")
 	public ResponseDto<Integer> update(@RequestBody User user){		
+		
+		System.err.println("컨트롤러 윶 : "+user);
+		
 		userService.회원수정(user);
 		
 		//여기서는 트랜잭션이 종료되기 때문에 DB값은 변경이 됐음.

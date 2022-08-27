@@ -15,11 +15,11 @@
   </div>
   <div class="form-group">
     <label for="email">Email address:</label>
-    <input type="email" value="${principal.user.email }" class="form-control" placeholder="Enter email" id="email">
+    <input type="text" value="${principal.user.email }" class="form-control" placeholder="Enter email" id="email">
   </div>
   </br>
 </form>
-  <button id="btn-update" class="btn btn-primary">회원수정 완료</button>
+  <button id="btn-user-update" class="btn btn-primary">회원수정 완료</button>
 </div>
 
 <script src="/js/user.js"></script>

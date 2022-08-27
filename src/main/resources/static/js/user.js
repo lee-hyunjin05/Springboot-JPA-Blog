@@ -6,7 +6,7 @@ let index = {
 //			_this.save();
 			this.save();
 		});
-		$("#btn-update").on("click", ()=>{	//functiin(){}, ()=> this를 바인딩 하기 위해서
+		$("#btn-user-update").on("click", ()=>{	//functiin(){}, ()=> this를 바인딩 하기 위해서
 //			_this.save();
 			this.update();
 		});
@@ -51,10 +51,8 @@ let index = {
 			id : $("#id").val(),
 			username : $("#username").val(),
 			password : $("#password").val(),
-			eamil: $("#eamil").val()
+			email: $("#email").val()
 		}
-		
-		alert("데이터 확인 : "+ data);
 
 		$.ajax({
 				type:"PUT"
