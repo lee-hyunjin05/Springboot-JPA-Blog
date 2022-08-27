@@ -10,11 +10,11 @@ let index = {
 //			_this.save();
 			this.update();
 		});
-		/*
+		
 		$("#btn-login").on("click", ()=>{
 			this.login();
 		});
-		*/
+		
 	},
 	
 	save: function(){
@@ -70,7 +70,7 @@ let index = {
 		});
 	},
 	
-	/*
+	
 	login: function(){
 //		alert('user의 save 함수 호출됨');
 		let data = {
@@ -93,7 +93,7 @@ let index = {
 		});
 
 	},
-	*/
+	
 }
 
 index.init();

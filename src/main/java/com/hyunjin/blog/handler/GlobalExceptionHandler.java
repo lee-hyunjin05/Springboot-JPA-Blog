@@ -11,6 +11,7 @@ import com.hyunjin.blog.dto.ResponseDto;
 @RestController
 public class GlobalExceptionHandler {
 
+	/*
 //	@ExceptionHandler(value = IllegalArgumentException.class)
 	@ExceptionHandler(value = Exception.class)
 //	public String handleArgumentException(IllegalArgumentException e) {
@@ -19,5 +20,12 @@ public class GlobalExceptionHandler {
 		return new ResponseDto<String>(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());	//자바오브젝트 JSON으로 변환해서 리턴 (Jackson)
 //		return"<h1>"+e.getMessage()+"</h1>";
 	}
+	*/
+	
+	@ExceptionHandler(value = Exception.class)
+	public ResponseDto<String> handleArgumentException(Exception e) {
+		return new ResponseDto<String>(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());	//자바오브젝트 JSON으로 변환해서 리턴 (Jackson)
+	}
+	
 	
 }

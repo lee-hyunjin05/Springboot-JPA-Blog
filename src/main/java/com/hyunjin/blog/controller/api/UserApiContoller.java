@@ -35,7 +35,6 @@ public class UserApiContoller {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
-	
 	/*
 	@Autowired
 	private HttpSession session;
@@ -50,11 +49,14 @@ public class UserApiContoller {
 	}
 	
 	@PutMapping("/user")
-	public ResponseDto<Integer> update(@RequestBody User user){		userService.회원수정(user);
+	public ResponseDto<Integer> update(@RequestBody User user){		
+		userService.회원수정(user);
+		
 		//여기서는 트랜잭션이 종료되기 때문에 DB값은 변경이 됐음.
 		//하지만 세션값은 변경되지 않은 상태이기 때문에 우리가 직접 세션값을 변경해 줄것임.
 		//세션등록
-		String encPassword = encoder.encode(user.getPassword());
+		
+//		String encPassword = encoder.encode(user.getPassword());
 		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
 //		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), encPassword));
 		SecurityContextHolder.getContext().setAuthentication(authentication);

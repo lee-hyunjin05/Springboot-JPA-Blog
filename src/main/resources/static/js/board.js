@@ -58,6 +58,8 @@ let index = {
 			content: $("#content").val()
 		}
 
+		alert("데이터 확인 : "+data);
+
 		$.ajax({
 				type:"PUT"
 			, 	url:"/api/board/"+id

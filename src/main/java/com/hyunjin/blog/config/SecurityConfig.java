@@ -30,12 +30,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return super.authenticationManagerBean();
 	}
 	
-	
-	
-	
 	@Bean	//IoC가 되요~!
 	public BCryptPasswordEncoder encoderPWD() {
-		String endPassword = new BCryptPasswordEncoder().encode("1234");
+//		String endPassword = new BCryptPasswordEncoder().encode("1234");
 		return new BCryptPasswordEncoder();
 	}
 	
