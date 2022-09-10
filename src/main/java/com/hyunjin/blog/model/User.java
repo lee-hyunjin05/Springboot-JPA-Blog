@@ -38,7 +38,7 @@ public class User {
 	private String username;	//아이디
 	
 	@Column(nullable = false, length = 100)	//12345 -> 해쉬 (비밀번호 암호화)
-	private String password;
+  	private String password;
 	
 	@Column(nullable = false, length = 50)
 	private String email;

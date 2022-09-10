@@ -465,10 +465,34 @@ MIME	타입:클라이언트에게 전송된 문서의 다양성을 알려주기 
  
 64강	)
 
+카카오 로그인 액세스토큰 받기
+
+인증 코드 받기
+
+get : 
+https://kauth.kakao.com/oauth/authorize?client_id=9581a01b5490e0de2456345dc527ee1e&redirect_uri=http://localhost:8000/auth/kakao/callback&response_type=code
+
+응답받은 코드
+: http://localhost:8000/auth/kakao/callback?code=VubL-zvl8jj7J3btflyhplMwOF166jNZL5fC3l9xN0mPzgpNxbwKe8SQOfFe6UuE86AfLAorDNIAAAGDJ5uMxA
+
+VubL-zvl8jj7J3btflyhplMwOF166jNZL5fC3l9xN0mPzgpNxbwKe8SQOfFe6UuE86AfLAorDNIAAAGDJ5uMxA
+
+카카오 인증 완료 : QSwrP7x1LzGStsZN771Vty0QLmu9CA9lhXMfI8OklUjRyHJpEVyZ6S1l_q1Sl18IQoDf3go9dRsAAAGDJ5_CDw
+
+토큰 발급 요청 주소 (POST) http body에 데이터를 전달 (5가지 데이터를 전달해야됨)
+MIME : application/x-www-form-urlencoded;charset=utf-8 (key=value)
+
+grant_type	:	authorization_code
+client_id	:	9581a01b5490e0de2456345dc527ee1e	
+redirect_uri:	http://localhost:8000/auth/kakao/callback
+code		:	{동적임} 
+client_secret  
 
 
+https://kauth.kakao.com/oauth/token
 
 
+카카오 토큰 요청 완료 : 토큰 요청에 대한 응답 : <200,{"access_token":"o7KtEp8eCVcUn2p6_cgbzYnPyR5qBd49XRQTfU-dCisMpwAAAYMnuce3","token_type":"bearer","refresh_token":"KzWgd07zDLU1QjmbVhJgJFEQPWR6SpxgqVSB0zfjCisMpwAAAYMnuce2","expires_in":21599,"scope":"account_email profile_nickname","refresh_token_expires_in":5183999},[Date:"Sat, 10 Sep 2022 14:07:10 GMT", Content-Type:"application/json;charset=utf-8", Transfer-Encoding:"chunked", Connection:"keep-alive", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-XSS-Protection:"1; mode=block", X-Frame-Options:"DENY", X-Content-Type-Options:"nosniff", Kakao:"Talk", Access-Control-Allow-Origin:"*", Access-Control-Allow-Methods:"GET, POST, OPTIONS", Access-Control-Allow-Headers:"Authorization, KA, Origin, X-Requested-With, Content-Type, Accept"]>
 
 
 
