@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class TempContrllerTest {
+public class TempControllerTest {
 
 	//http://localhost:8080/blog/temp/home
 	@GetMapping("/temp/home")

@@ -1,22 +1,26 @@
 package com.hyunjin.blog.service;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.hyunjin.blog.dto.ReplySaveRequestDto;
 import com.hyunjin.blog.model.Board;
 import com.hyunjin.blog.model.User;
 import com.hyunjin.blog.repository.BoardRepository;
+import com.hyunjin.blog.repository.ReplyRepository;
 
 @Service
 public class BoardService {
 
-	@Autowired
 	private BoardRepository boardRepository;
+	private ReplyRepository replyRepository;
+
+//	public BoardService(BoardRepository bRepo, ReplyRepository rRepo) {
+//		this.boardRepository = bRepo;
+//		this.replyRepository = rRepo;
+//	}
 	
 	@Transactional
 	public void 글쓰기(Board board, User user) {	//title, content
@@ -24,13 +28,6 @@ public class BoardService {
 		board.setUser(user);
 		boardRepository.save(board);
 	}
-	
-	/*
-//	public List<Board> 글목록(Pageable pageable) {
-	public Page<Board> 글목록(Pageable pageable) {
-		return boardRepository.findAll(pageable);
-	}
-	*/
 	
 	@Transactional(readOnly = true)
 	public Page<Board> 글목록(Pageable pageable){
@@ -59,6 +56,17 @@ public class BoardService {
 		board.setTitle(requestBoard.getTitle());
 		board.setContent(requestBoard.getContent());
 		// 해당 함수로 종료시(Service가 종료될 때) 트랜잭션이 종료됩니다. 이때 더티채킹 - 자동 업데이트가 됨. db flush
+	}
+	
+	@Transactional
+	public void 댓글쓰기(ReplySaveRequestDto replySaveRequestDto) {
+		int result = replyRepository.mSave(replySaveRequestDto.getUserId(), replySaveRequestDto.getBoardId(), replySaveRequestDto.getContent());
+		System.out.println("BoardService : "+result);
+	}
+	
+	@Transactional
+	public void 댓글삭제(int replyId) {
+		replyRepository.deleteById(replyId);
 	}
 	
 }

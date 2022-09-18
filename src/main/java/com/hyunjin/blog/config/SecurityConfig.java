@@ -15,9 +15,9 @@ import com.hyunjin.blog.config.auth.PrincipalDetailService;
 
 //빈 등록 : 스프링 컨테이너에서 객체를 관리할 수 있게 하는 것
 
-//@SuppressWarnings("deprecation")
 @Configuration	//빈등록 (IoC 관리)
 @EnableWebSecurity	//시큐리티 필터를 추가 = 스프링 시큐리티가 활성화가 되어있는데 어떤 설정을 해당 파일에서 하겟다. --> 시큐리티 필터가 등록이 된다
+//Controller에서 특정 권한이 있는 유저만 접근을 허용하려면 @PreAuthorize 어노테이션을 사용하는데, 해당 어노테이션을 활성화 시키는 어노테이션이다.
 @EnableGlobalMethodSecurity(prePostEnabled = true)	//특정 주소로 접근을 하면 권한 및 인증을 미리 체크하겠다는 뜻				
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -58,8 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 				.formLogin()
 				.loginPage("/auth/loginForm")
-				.loginProcessingUrl("/auth/loginProc")	//스프링 시큐리티가 해당 주소로 요청오는 로그인을 가로채서 대신 로그인 해준다.
-				.defaultSuccessUrl("/");
+				.loginProcessingUrl("/auth/loginProc")	
+				.defaultSuccessUrl("/");	//스프링 시큐리티가 해당 주소로 요청오는 로그인을 가로채서 대신 로그인 해준다.
 	}
-	
 } 

@@ -494,6 +494,103 @@ https://kauth.kakao.com/oauth/token
 
 카카오 토큰 요청 완료 : 토큰 요청에 대한 응답 : <200,{"access_token":"o7KtEp8eCVcUn2p6_cgbzYnPyR5qBd49XRQTfU-dCisMpwAAAYMnuce3","token_type":"bearer","refresh_token":"KzWgd07zDLU1QjmbVhJgJFEQPWR6SpxgqVSB0zfjCisMpwAAAYMnuce2","expires_in":21599,"scope":"account_email profile_nickname","refresh_token_expires_in":5183999},[Date:"Sat, 10 Sep 2022 14:07:10 GMT", Content-Type:"application/json;charset=utf-8", Transfer-Encoding:"chunked", Connection:"keep-alive", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-XSS-Protection:"1; mode=block", X-Frame-Options:"DENY", X-Content-Type-Options:"nosniff", Kakao:"Talk", Access-Control-Allow-Origin:"*", Access-Control-Allow-Methods:"GET, POST, OPTIONS", Access-Control-Allow-Headers:"Authorization, KA, Origin, X-Requested-With, Content-Type, Accept"]>
 
+65강 ) 
+
+카카오 로그인 서비스 구현 완료
+
+토큰을 통한 사용자 정보 조회 (POST)
+
+Host: https://kapi.kakao.com/v2/user/me 
+Authorization: Bearer ${ACCESS_TOKEN}/KakaoAK ${APP_ADMIN_KEY}
+Content-type: application/x-www-form-urlencoded;charset=utf-8
+
+jsonschema2.pojo
+
+:
+
+-----------------------------------com.hyunjin.blog.model.KakaoAccount.java-----------------------------------
+
+package com.hyunjin.blog.model;
+
+import javax.annotation.Generated;
+
+@Generated("jsonschema2pojo")
+public class KakaoAccount {
+
+public boolean profileNicknameNeedsAgreement;
+public Profile profile;
+public boolean hasEmail;
+public boolean emailNeedsAgreement;
+public boolean isEmailValid;
+public boolean isEmailVerified;
+public String email;
+
+}
+-----------------------------------com.hyunjin.blog.model.KakaoProfile.java-----------------------------------
+
+package com.hyunjin.blog.model;
+
+import javax.annotation.Generated;
+
+@Generated("jsonschema2pojo")
+public class KakaoProfile {
+
+public long id;
+public String connectedAt;
+public Properties properties;
+public KakaoAccount kakaoAccount;
+
+}
+-----------------------------------com.hyunjin.blog.model.Profile.java-----------------------------------
+
+package com.hyunjin.blog.model;
+
+import javax.annotation.Generated;
+
+@Generated("jsonschema2pojo")
+public class Profile {
+
+public String nickname;
+
+}
+-----------------------------------com.hyunjin.blog.model.Properties.java-----------------------------------
+
+package com.hyunjin.blog.model;
+
+import javax.annotation.Generated;
+
+@Generated("jsonschema2pojo")
+public class Properties {
+
+public String nickname;
+
+}
+
+
+// git dummycontroller 까지 해ㅡㅇㅁ
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

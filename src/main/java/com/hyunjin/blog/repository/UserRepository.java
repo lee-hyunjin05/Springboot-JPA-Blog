@@ -15,6 +15,7 @@ public interface UserRepository extends JpaRepository<User, Integer>{
 	
 	// SELECT * FORM user WHERE username = 1?;
 	Optional<User> findByUsername(String username);
+}
 	
 	//JPA Naming 쿼리
 	//SELECT * FROM user WHERE username =?1 AND password = ?2;
@@ -24,4 +25,3 @@ public interface UserRepository extends JpaRepository<User, Integer>{
 	@Query(value="SELECT * FROM user WHERE username =?1 AND password = ?2", nativeQuery = true)
 	User login(String username, String password);
 	*/
-}

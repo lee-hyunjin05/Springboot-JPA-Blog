@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hyunjin.blog.model.RoleType;
@@ -32,28 +31,28 @@ public class DummyControllerTest {
 	@Autowired	//의존성 주입 (DI)
 	private UserRepository userRepository;
 	
-	@DeleteMapping("/dummy/user/{id}")
-	public String delete(@PathVariable int id) {
-		try {
-			userRepository.deleteById(id);
-//		} catch (Exception e) {
-		} catch (EmptyResultDataAccessException e) {
-			return "삭제에 실패하였습닏. 해당 id는 DB에 없습니다.";
-		}
-		return "삭제 되었습니다. id : "+id;
-	}
-	
 	//save 함수는 id를 전달하지 않으면 insert를 더해주고
 	//save 함수는 id를 전달하면 해당 id에 대한 데이터가 있으면 update를 해주고
 	//save 함수는 id를 전달하면 해당 id에 대한 데이터가 없으면 insert를 해준다.
 	//email, password
+	
+	@DeleteMapping("/dummy/user/{id}")
+	public String delete(@PathVariable int id) {
+		try {
+			userRepository.deleteById(id);
+		} catch (EmptyResultDataAccessException e) {
+			return "삭제에 실패하였습니다. 해당 id는 DB에 없습니다.";
+		}
+		return "삭제 되었습니다. id : "+id;
+	}
+	
 	@Transactional	//함수 종료시에 자동 commit
 	@PutMapping("/dummy/user/{id}")
 	public User updateUser(@PathVariable int id, @RequestBody User requestUser) { //json 데이터를 요청 -> Java Object(MessageConverter의 Jackson 라이브러리가 변환해서 받아줘요
 		System.out.println("id : "+id);
 		System.out.println("password : "+requestUser.getPassword());
 		System.out.println("email : "+requestUser.getEmail());
-
+		
 		User user = userRepository.findById(id).orElseThrow(()->{
 			return new IllegalArgumentException("수정에 실패하였습니다.");
 		});
@@ -61,33 +60,24 @@ public class DummyControllerTest {
 		user.setPassword(requestUser.getPassword());
 		user.setEmail(requestUser.getEmail());
 		
-//		requestUser.setId(id);
-//		requestUser.setUsername("hyunjin");
-//		userRepository.save(requestUser);
-
-//		userRepository.save(user);
+		//userRepository.save(user);
 		
 		//더티 채킹
 		return user;
 	}	
+	
 	//http://localhost:8000/blog/dummy/user
 	@GetMapping("/dummy/users")
 	public List<User> list(){
 		return userRepository.findAll();
 	}
 	
+	// 한 페이지당 2건에 데이터를 리턴받아 볼 예정
 	@GetMapping("/dummy/user")
 	public Page<User> pageList(@PageableDefault(size = 1, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
-//	public List<User> pageList(@PageableDefault(size = 1, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
 		Page<User> pagingUsers = userRepository.findAll(pageable);
-//		List<User> users = userRepository.findAll(pageable).getContent();
+
 		List<User> users = pagingUsers.getContent();
-		
-		if(pagingUsers.isLast()) {
-			
-		}
-		
-//		return users;
 		return pagingUsers;
 	}
 	
@@ -99,36 +89,23 @@ public class DummyControllerTest {
 		//그럼 return null이 리턴되잖아 그럼 프로젝트에 문제가 있지 않겠니?
 		//Optional로 너의 User객체를 감싸서 가져올테니 null인지 아닌지 판단해서 return해!
 		
-//		User user = userRepository.findById(id).get();
+		//람다식
+		//User user = userRepository.findById(id).get();
 		/*
 		User user = userRepository.findById(id).orElseGet(new Supplier<User>() {
 			@Override
 			public User get() {
-				return new User();
+				return new IllegalArgumentException("해당 유저는 없습니다. ");
 			}
 		});
 		*/
+		
 		User user = userRepository.findById(id).orElseThrow(new Supplier<IllegalArgumentException>() {
 			@Override
 			public IllegalArgumentException get() {
 				return new IllegalArgumentException("해당 유저는 없습니다. id : "+id);
 			}
 		});
-		
-		/*
-		User user = userRepository.findById(id).orElseGet(new Supplier<User>() {
-			@Override
-			public User get() {
-				return new User();
-			}
-		});
-		*/
-		//람다식
-		/*
-		User user = userRepository.findById(id).orElseThrow(()->{
-			return new IllegalArgumentException("해당 사용자는 없습니다.");
-		});
-		*/
 
 		//요청 웹브라우저
 		//user 객체 = 자바 오브젝트
@@ -142,15 +119,7 @@ public class DummyControllerTest {
 	//http://localhost:8000/blog/dummy/join (요청)
 	// http의 body에 username, password, email 데이터를 가지고 (요청)
 	@PostMapping("/dummy/join")
-//	public String join(@RequestParam("username") String uname, String password, String email) {
-//	public String join(String username, String password, String email) { //key = value (약속된 규칙)
-	public String join(User user) {
-
-//		System.out.println("username : "+username);
-//		System.out.println("password : "+password);
-//		System.out.println("email : "+email);
-		
-		
+	public String join(User user) {	// key=value (약속된 규칙)
 		System.out.println("id : "+user.getId());
 		System.out.println("username : "+user.getUsername());
 		System.out.println("password : "+user.getPassword());

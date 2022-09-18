@@ -1,79 +1,110 @@
+
 let index = {
-	init: function(){
-		$("#btn-save").on("click", ()=>{	//functiin(){}, ()=> this를 바인딩 하기 위해서
-			this.save();
-		});
-		$("#btn-delete").on("click", ()=>{	//functiin(){}, ()=> this를 바인딩 하기 위해서
-			this.deleteById();
-		});
-		$("#btn-update").on("click", ()=>{	//functiin(){}, ()=> this를 바인딩 하기 위해서
-			this.update();
-		});
-	},
-	
-	save: function(){
-		let data = {
-			title: $("#title").val(),
-			content: $("#content").val()
-		}
+		init: function(){
+			$("#btn-save").on("click", ()=>{ 
+				this.save();
+			});
+			$("#btn-delete").on("click", ()=>{ 
+				this.deleteById();
+			});
+			$("#btn-update").on("click", ()=>{ 
+				this.update();
+			});
+			$("#btn-reply-save").on("click", ()=>{ 
+				this.replySave();
+			});
+		},
 
-		$.ajax({
-				type:"POST"
-			, 	url:"/api/board"
-			,	data:JSON.stringify(data)	//http body data
-			,	contentType:"application/json; charset = utf-8"
-			,	dataType: "json"	// 요청을 서버로해서 응답이 왔을 때 기본적으로 모든 것이 문자열(생긴게 json이라면) => javascript 데이터로 변경을 해준다.
-		}).done(function(resp){
-			alert("글쓰기가 완료 되었습니다");
-			location.href = "/";
-		}).fail(function(error){
-			alert(JSON.strigify(error));
-		});
-
-	},
-	
-	deleteById: function(){
+		save: function(){
+			let data = {
+					title: $("#title").val(),
+					content: $("#content").val()
+			};
+			
+			$.ajax({ 
+				type: "POST",
+				url: "/api/board",
+				data: JSON.stringify(data),
+				contentType: "application/json; charset=utf-8",
+				dataType: "json"
+			}).done(function(resp){
+				alert("글쓰기가 완료되었습니다.");
+				location.href = "/";
+			}).fail(function(error){
+				alert(JSON.stringify(error));
+			}); 
+		},
 		
-		var id = $("#id").text();
+		deleteById: function(){
+			let id = $("#id").text();
+			
+			$.ajax({ 
+				type: "DELETE",
+				url: "/api/board/"+id,
+				dataType: "json"
+			}).done(function(resp){
+				alert("삭제가 완료되었습니다.");
+				location.href = "/";
+			}).fail(function(error){
+				alert(JSON.stringify(error));
+			}); 
+		},
 		
-		$.ajax({
-				type:"DELETE"
-			, 	url:"/api/board/"+id
-			,	contentType:"application/json; charset = utf-8"
-			,	dataType: "json"	// 요청을 서버로해서 응답이 왔을 때 기본적으로 모든 것이 문자열(생긴게 json이라면) => javascript 데이터로 변경을 해준다.
-		}).done(function(resp){
-			alert("삭제가 완료 되었습니다");
-			location.href = "/";
-		}).fail(function(error){
-			alert(JSON.strigify(error));
-		});
+		update: function(){
+			let id = $("#id").val();
+			
+			let data = {
+					title: $("#title").val(),
+					content: $("#content").val()
+			};
 
-	},
-	
-	update: function(){
-		let id = $("#id").val();
+			$.ajax({ 
+				type: "PUT",
+				url: "/api/board/"+id,
+				data: JSON.stringify(data),
+				contentType: "application/json; charset=utf-8",
+				dataType: "json"
+			}).done(function(resp){
+				alert("글수정이 완료되었습니다.");
+				location.href = "/";
+			}).fail(function(error){
+				alert(JSON.stringify(error));
+			}); 
+		},
 		
-		let data = {
-			title: $("#title").val(),
-			content: $("#content").val()
-		}
-
-		alert("데이터 확인 : "+data);
-
-		$.ajax({
-				type:"PUT"
-			, 	url:"/api/board/"+id
-			,	data:JSON.stringify(data)	//http body data
-			,	contentType:"application/json; charset = utf-8"
-			,	dataType: "json"	// 요청을 서버로해서 응답이 왔을 때 기본적으로 모든 것이 문자열(생긴게 json이라면) => javascript 데이터로 변경을 해준다.
-		}).done(function(resp){
-			alert("글 수정이 완료 되었습니다");
-			location.href = "/";
-		}).fail(function(error){
-			alert(JSON.strigify(error));
-		});
-
-	},
+		replySave: function(){
+			let data = {
+					userId: $("#userId").val(),
+					boardId: $("#boardId").val(),
+					content: $("#reply-content").val()
+			};
+			
+			$.ajax({ 
+				type: "POST",
+				url: `/api/board/${data.boardId}/reply`,
+				data: JSON.stringify(data),
+				contentType: "application/json; charset=utf-8",
+				dataType: "json"
+			}).done(function(resp){
+				alert("댓글작성이 완료되었습니다.");
+				location.href = `/board/${data.boardId}`;
+			}).fail(function(error){
+				alert(JSON.stringify(error));
+			}); 
+		},
+		
+		replyDelete : function(boardId, replyId){
+			$.ajax({ 
+				type: "DELETE",
+				url: `/api/board/${boardId}/reply/${replyId}`,
+				dataType: "json"
+			}).done(function(resp){
+				alert("댓글삭제 성공");
+				location.href = `/board/${boardId}`;
+			}).fail(function(error){
+				alert(JSON.stringify(error));
+			}); 
+		},
 }
 
-index.init();
+index.init()
